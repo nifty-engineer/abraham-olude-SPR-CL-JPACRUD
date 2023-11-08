@@ -20,14 +20,14 @@ public class StoreService {
      * @return the persisted store
      */
     public Store persistStore(Store store){
-        return null;
+        return storeRepository.save(store);
     }
     /**
      * TODO: get all store entities
      * @return all store entities
      */
     public List<Store> getAllStores(){
-        return null;
+        return storeRepository.findAll();
     }
     /**
      * TODO: given an id of a store, return the store.
@@ -36,13 +36,14 @@ public class StoreService {
      * @return a store entity
      */
     public Store getStoreById(long id){
-        return null;
+        return storeRepository.findById(id).orElseGet(() -> null);
     }
     /**
      * TODO: given an id of an existing store, delete the store
      */
     public void deleteStore(long id){
 //        code here
+        storeRepository.deleteById(id);
     }
     /**
      * TODO: given an id and some replacement data for a store, overwrite the data of an existing store,
@@ -50,7 +51,11 @@ public class StoreService {
      * @return the updated store entity
      */
     public Store updateStore(long id, Store replacement){
-        return null;
+
+        Store store = storeRepository.findById(id).orElseGet(() -> null);
+        store.setName(replacement.getName());
+        store.setAddress(replacement.getAddress());
+        return storeRepository.save(store);
     }
 
 }
